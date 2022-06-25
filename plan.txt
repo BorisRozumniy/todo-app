@@ -1,0 +1,3 @@
+- public this project in git-hub
+- add typesctipt
+- add docker and docker compose

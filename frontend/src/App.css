@@ -1,0 +1,91 @@
+body {
+  padding: 20px 16px;
+}
+
+main {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+@media only screen and (max-width: 539px) {
+  main {
+    max-width: 300px;
+  }
+}
+
+.input-block {
+  padding: 5px 15px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 22px;
+}
+
+.input-block__input {
+  padding: 5px;
+}
+
+.todo-list {
+  max-width: 300px;
+}
+@media only screen and (min-width: 540px) {
+  .todo-list {
+    max-width: 500px;
+  }
+}
+
+.todo-list__item {
+  padding: 5px 15px;
+  display: grid;
+  grid-template-columns: 3fr 20px repeat(2, 1fr);
+  grid-gap: 5px;
+  align-items: start;
+}
+
+@media only screen and (max-width: 539px) {
+  .todo-item__text {
+    grid-area: text;
+  }
+  .todo-item__status {
+    grid-area: status;
+    justify-self: end;
+  }
+  .todo-item__btn.edit {
+    grid-area: btn-edit;
+  }
+  .todo-item__btn.remove {
+    grid-area: btn-remove;
+  }
+  .todo-list__item {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "text text text status"
+      "btn-edit btn-edit btn-remove btn-remove";
+  }
+}
+
+.todo-item__btn {
+  color: white;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  transition: all 1s;
+}
+.todo-item__btn:hover,
+.todo-item__btn:focus {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.edit {
+  background-color: #40a040;
+}
+.remove {
+  background-color: #f44336;
+}
+.create {
+  background-color: #2196f3;
+}

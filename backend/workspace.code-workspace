@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "todo-app-beckend",
+			"path": "."
+		},
+		{
+			"name": "todo-app",
+			"path": "../todo-app"
+		},
+		{
+			"name": "nodeReact",
+			"path": "../nodeReact"
+		},
+		{
+			"name": "catalogue-app-v0.1",
+			"path": "../catalogue-app-v0.1"
+		}
+	],
+	"settings": {}
+}
