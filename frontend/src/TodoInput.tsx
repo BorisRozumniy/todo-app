@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
-export const TodoInput = ({ onAdd }) => {
+type Props = {
+  onAdd: (v: string) => {};
+};
+
+export const TodoInput = ({ onAdd }: Props) => {
   const [value, setValue] = useState("");
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") onAdd(value);
   };
 
