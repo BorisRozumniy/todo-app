@@ -1,3 +1,4 @@
-- public this project in git-hub
++ public this project in git-hub
 - add typesctipt
 - add docker and docker compose
+- settings for the Prettier
