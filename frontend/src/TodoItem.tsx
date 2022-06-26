@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
-import { TodoContext } from "./App";
+import { TodoContext, TodoType } from "./todoContext";
 
-export const TodoItem = ({ item }) => {
+type Props = {
+  item: TodoType;
+};
+
+export const TodoItem = ({ item }: Props) => {
   const context = useContext(TodoContext);
   return (
     <div className="todo-list__item">
@@ -9,17 +13,17 @@ export const TodoItem = ({ item }) => {
       <input
         type="checkbox"
         checked={item.isDone}
-        onChange={() => context.changeStatusTodo(item)}
+        onChange={() => context?.changeStatusTodo(item)}
         className="todo-item__status"
       />
       <button
-        onClick={() => context.renameTodo(item)}
+        onClick={() => context?.renameTodo(item)}
         className="todo-item__btn edit"
       >
         Edit
       </button>
       <button
-        onClick={() => context.removeTodo(item)}
+        onClick={() => context?.removeTodo(item)}
         className="todo-item__btn remove"
       >
         Remove

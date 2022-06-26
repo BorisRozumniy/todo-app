@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { TodoType } from "./todoContext";
 
 type Props = {
-  onAdd: (v: string) => {};
+  onAdd: (v: TodoType["title"]) => void;
 };
 
 export const TodoInput = ({ onAdd }: Props) => {

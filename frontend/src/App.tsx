@@ -1,15 +1,14 @@
-import { useState, createContext, useEffect } from "react";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { useState, useEffect } from "react";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import "./App.css";
 import { todoUrl } from "./apiUrls";
 import { TodoInput } from "./TodoInput";
 import { TodoList } from "./TodoList";
-
-export const TodoContext = createContext();
+import { TodoContext, TodoContextInterface, TodoType } from "./todoContext";
 
 function App() {
   useEffect(() => {
@@ -20,9 +19,9 @@ function App() {
       });
   }, []);
 
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = useState([] as TodoType[]);
 
-  const updateTodo = (todo) => {
+  const updateTodo = (todo: TodoType) => {
     const url = `${todoUrl}${todo._id}`;
 
     const config = {
@@ -31,7 +30,7 @@ function App() {
       body: JSON.stringify(todo),
     };
 
-    let ok;
+    let ok: boolean;
 
     fetch(url, config)
       .then((res) => {
@@ -41,7 +40,7 @@ function App() {
       .then((data) => {
         if (!ok) return Promise.reject(data);
 
-        let editingItem = {};
+        let editingItem = {} as TodoType;
         const listWithChangedItem = todoList.map((todoItem) => {
           if (todoItem._id === data.editedTodo._id) {
             editingItem = { ...data.editedTodo };
@@ -50,16 +49,16 @@ function App() {
           return todoItem;
         });
 
-        NotificationManager.success("", data.message, 5000);
+        // NotificationManager.success("", data.message, 5000);
         setTodoList(listWithChangedItem);
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        NotificationManager.error("", error.message, 5000);
+        // NotificationManager.error("", error.message, 5000);
       });
   };
 
-  const addTodo = (value) => {
+  const addTodo = (value: TodoType["title"]) => {
     const newTodo = {
       title: value,
       isDone: false,
@@ -71,7 +70,7 @@ function App() {
       body: JSON.stringify(newTodo),
     };
 
-    let ok;
+    let ok: boolean;
 
     fetch(todoUrl, config)
       .then((res) => {
@@ -80,21 +79,21 @@ function App() {
       })
       .then((data) => {
         if (!ok) return Promise.reject(data);
-        NotificationManager.success("", data.message, 5000);
+        // NotificationManager.success("", data.message, 5000);
         setTodoList([...todoList, data.todo]);
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        NotificationManager.error("", error.message, 5000);
+        // NotificationManager.error("", error.message, 5000);
       });
   };
 
-  const renameTodo = (item) => {
+  const renameTodo = (item: TodoType) => {
     const newTitle = prompt("Enter new title:", item.title);
-    updateTodo({ ...item, title: newTitle });
+    updateTodo({ ...item, title: newTitle || '' });
   };
 
-  const removeTodo = (item) => {
+  const removeTodo = (item: TodoType) => {
     const url = `${todoUrl}${item._id}`;
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -108,23 +107,29 @@ function App() {
           (todo) => todo._id !== data.deletedTodo._id
         );
         setTodoList(filteredTodoList);
-        NotificationManager.success("", data.message, 5000);
+        // NotificationManager.success("", data.message, 5000);
       });
   };
 
-  const changeStatusTodo = (item) => {
+  const changeStatusTodo = (item: TodoType) => {
     updateTodo({ ...item, isDone: !item.isDone });
+  };
+
+  const todoContextValue: TodoContextInterface = {
+    addTodo,
+    updateTodo,
+    renameTodo,
+    removeTodo,
+    changeStatusTodo,
   };
 
   return (
     <main>
-      <TodoContext.Provider
-        value={{ renameTodo, removeTodo, changeStatusTodo }}
-      >
+      <TodoContext.Provider value={todoContextValue}>
         <TodoInput onAdd={addTodo} />
         <TodoList todoList={todoList} />
       </TodoContext.Provider>
-      <NotificationContainer />
+      {/* <NotificationContainer /> */}
     </main>
   );
 }
