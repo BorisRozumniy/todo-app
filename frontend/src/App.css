@@ -9,6 +9,7 @@ main {
   justify-content: center;
   flex-direction: column;
 }
+
 @media only screen and (max-width: 539px) {
   main {
     max-width: 300px;
@@ -29,6 +30,7 @@ main {
 .todo-list {
   max-width: 300px;
 }
+
 @media only screen and (min-width: 540px) {
   .todo-list {
     max-width: 500px;
@@ -47,16 +49,20 @@ main {
   .todo-item__text {
     grid-area: text;
   }
+
   .todo-item__status {
     grid-area: status;
     justify-self: end;
   }
+
   .todo-item__btn.edit {
     grid-area: btn-edit;
   }
+
   .todo-item__btn.remove {
     grid-area: btn-remove;
   }
+
   .todo-list__item {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
@@ -74,18 +80,50 @@ main {
   border: none;
   cursor: pointer;
   transition: all 1s;
+  background-repeat: no-repeat;
+  background-position: 10px 50%;
+  position: relative;
 }
+
 .todo-item__btn:hover,
 .todo-item__btn:focus {
   background: rgba(0, 0, 0, 0.5);
 }
 
+.todo-item__btn::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+  border: solid 1px black;
+  background-color: rgb(137, 178, 255);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
 .edit {
   background-color: #40a040;
 }
+
+.edit::after {
+  background-image: url(images/edit.svg);
+}
+
 .remove {
   background-color: #f44336;
 }
+
+.remove::after {
+  background-image: url(images/delete.svg);
+}
+
 .create {
   background-color: #2196f3;
+}
+
+.create::after {
+  background-image: url(images/add.svg);
 }
